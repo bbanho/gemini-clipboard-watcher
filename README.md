@@ -108,7 +108,7 @@ Agora, sempre que você pressionar o atalho de teclado configurado, o script ser
 
 ## Configuração
 
-Você pode ajustar o comportamento do script editando a variável `PROMPT_PREFIX` dentro do arquivo `gemini_clipboard_watcher.sh`.
+You can adjust the script's behavior by editing the `PROMPT_PREFIX` variable within the `gemini_clipboard_watcher.sh` file.
 
 ```bash
 # O prefixo a ser adicionado em cada prompt para o Gemini.
@@ -124,3 +124,132 @@ Altere o valor desta variável para modificar a instrução inicial que é envia
 -   **Erro ao chamar `gemini-cli`:** Verifique se sua chave de API do Gemini está configurada corretamente e se a ferramenta `gemini-cli` está funcionando independentemente do script.
 -   **Notificações não aparecem:** Instale o pacote `libnotify-bin` (Ubuntu/Debian) ou `libnotify` (Fedora).
 -   **Nenhum texto processado:** Certifique-se de que há texto na sua área de transferência antes de executar o script.
+
+---
+
+# Gemini Clipboard Watcher
+
+This Bash script automates interaction with Gemini AI via your clipboard. It captures copied text, sends it to `gemini-cli` with a configurable prefix, and then copies Gemini's response back to your clipboard, making it immediately available for pasting.
+
+## Features
+
+-   **Clipboard Integration:** Automatically captures content from the clipboard (Ctrl+C/V).
+-   **Gemini AI Interaction:** Sends captured text to `gemini-cli` for processing.
+-   **Response to Clipboard:** Copies Gemini's response back to the clipboard, ready for use.
+-   **Desktop Notifications:** Provides visual notifications about processing status (requires `notify-send`).
+-   **Configurable:** Allows customizing the prompt prefix sent to Gemini.
+
+## Prerequisites
+
+For this script to work correctly, you will need the following tools installed on your system:
+
+-   **`wl-clipboard`**: Provides the `wl-paste` and `wl-copy` commands to interact with the Wayland clipboard (also works on Xorg with `xclip` or `xsel` configured to emulate `wl-clipboard`).
+-   **`gemini-cli`**: The official or unofficial command-line tool for interacting with the Gemini API. Make sure it is configured and authenticated to use the `gemini-2.5-flash` model or another compatible model.
+-   **`libnotify-bin` (Optional)**: Provides the `notify-send` command for desktop notifications. If not installed, the script will work, but without visual notifications.
+
+## Installation
+
+Follow the steps below to install and configure the script on your system.
+
+### 1. Download the Script
+
+First, download the `gemini_clipboard_watcher.sh` script to a convenient location on your system. For example, you can clone this repository or copy the script's content to a new file.
+
+```bash
+mkdir -p ~/bin
+cd ~/bin
+wget https://raw.githubusercontent.com/your-username/your-repository/main/gemini_clipboard_watcher.sh # Replace with the actual URL
+chmod +x gemini_clipboard_watcher.sh
+```
+
+### 2. Install Dependencies
+
+#### For Ubuntu/Debian
+
+```bash
+sudo apt update
+sudo apt install wl-clipboard libnotify-bin
+```
+
+#### For Fedora
+
+```bash
+sudo dnf install wl-clipboard libnotify
+```
+
+### 3. Install and Configure `gemini-cli`
+
+This script relies on a command-line tool to interact with Gemini. There are several implementations (official and community). You will need to install one of them and configure it with your Gemini API credentials.
+
+**Example (using a hypothetical `gemini-cli` tool):**
+
+Follow the installation instructions for the `gemini-cli` tool you choose. Generally, this involves:
+
+-   Installing via `pip` (Python), `npm` (Node.js), or downloading a binary.
+-   Configuring your Gemini API key (usually via the `GEMINI_API_KEY` environment variable or a configuration file).
+
+Make sure the `gemini` command is available in your `PATH`.
+
+### 4. Add the Script to your PATH (Optional, but Recommended)
+
+If you placed the script in `~/bin` (as suggested in step 1), add this directory to your `PATH` so you can run the script from anywhere.
+
+Edit your `~/.bashrc` or `~/.zshrc` file (depending on your shell) and add the following line at the end:
+
+```bash
+export PATH="$HOME/bin:$PATH"
+```
+
+After editing, reload your shell:
+
+```bash
+source ~/.bashrc # or source ~/.zshrc
+```
+
+## Usage
+
+### Manual Execution
+
+You can run the script directly from the terminal:
+
+```bash
+gemini_clipboard_watcher.sh
+```
+
+When executed, it will grab the current clipboard content, send it to Gemini, and copy the response back. Progress and response will be displayed in the terminal.
+
+### Assign to a Keyboard Shortcut
+
+The most practical way to use this script is to assign it to a custom keyboard shortcut in your desktop environment (GNOME, KDE, XFCE, etc.).
+
+**Example (GNOME):**
+
+1.  Open **Settings**.
+2.  Go to **Keyboard** > **Keyboard Shortcuts**.
+3.  Scroll down and click **+** to add a new custom shortcut.
+4.  Fill in the fields:
+    -   **Name:** `Process Clipboard with Gemini`
+    -   **Command:** `/home/your-username/bin/gemini_clipboard_watcher.sh` (replace with the full path to your script)
+    -   **Shortcut:** Choose a key combination that is not in use, for example, `Ctrl+Alt+G`.
+5.  Click **Add**.
+
+Now, whenever you press the configured keyboard shortcut, the script will execute, processing your clipboard content.
+
+## Configuration
+
+You can adjust the script's behavior by editing the `PROMPT_PREFIX` variable within the `gemini_clipboard_watcher.sh` file.
+
+```bash
+# The prefix to be added to each prompt for Gemini.
+# Requests a direct, definitive, and plain text response.
+PROMPT_PREFIX="Respond directly, definitively, and in plain text. Do not ask for clarifications. If ambiguous, the response may be partial: "
+```
+
+Change the value of this variable to modify the initial instruction sent to Gemini along with your clipboard content.
+
+## Troubleshooting
+
+-   **`wl-paste` or `gemini` not found:** Ensure that dependencies are installed and executables are in your `PATH`.
+-   **Error calling `gemini-cli`:** Verify that your Gemini API key is configured correctly and that the `gemini-cli` tool is working independently of the script.
+-   **Notifications not appearing:** Install the `libnotify-bin` (Ubuntu/Debian) or `libnotify` (Fedora) package.
+-   **No text processed:** Ensure there is text in your clipboard before running the script.
