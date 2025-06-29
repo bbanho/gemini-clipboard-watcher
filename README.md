@@ -15,7 +15,7 @@ Este script Bash automatiza a interação com o Gemini AI através da sua área 
 Para que este script funcione corretamente, você precisará ter as seguintes ferramentas instaladas no seu sistema:
 
 -   **`wl-clipboard`**: Fornece os comandos `wl-paste` e `wl-copy` para interagir com a área de transferência do Wayland (também funciona em Xorg com `xclip` ou `xsel` configurado para emular `wl-clipboard`).
--   **`gemini-cli`**: A ferramenta de linha de comando oficial ou não-oficial para interagir com a API do Gemini. Certifique-se de que esteja configurado e autenticado para usar o modelo `gemini-2.5-flash` ou outro modelo compatível.
+-   **`gemini-cli`**: A ferramenta de linha de comando oficial ou não-oficial para interagir com a API do Gemini (por exemplo, [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli)). Certifique-se de que esteja configurado e autenticado para usar o modelo `gemini-2.5-flash` ou outro modelo compatível.
 -   **`libnotify-bin` (Opcional)**: Fornece o comando `notify-send` para notificações de desktop. Se não estiver instalado, o script funcionará, mas sem as notificações visuais.
 
 ## Instalação
@@ -144,7 +144,7 @@ This Bash script automates interaction with Gemini AI via your clipboard. It cap
 For this script to work correctly, you will need the following tools installed on your system:
 
 -   **`wl-clipboard`**: Provides the `wl-paste` and `wl-copy` commands to interact with the Wayland clipboard (also works on Xorg with `xclip` or `xsel` configured to emulate `wl-clipboard`).
--   **`gemini-cli`**: The official or unofficial command-line tool for interacting with the Gemini API. Make sure it is configured and authenticated to use the `gemini-2.5-flash` model or another compatible model.
+-   **`gemini-cli`**: The official or unofficial command-line tool for interacting with the Gemini API (e.g., [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli)). Make sure it is configured and authenticated to use the `gemini-2.5-flash` model or another compatible model.
 -   **`libnotify-bin` (Optional)**: Provides the `notify-send` command for desktop notifications. If not installed, the script will work, but without visual notifications.
 
 ## Installation
